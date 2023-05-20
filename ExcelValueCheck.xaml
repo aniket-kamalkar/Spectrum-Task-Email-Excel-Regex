@@ -5,7 +5,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>674,1922</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>674,2543</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ExcelValueCheck_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -96,13 +96,14 @@
       <AssemblyReference>System.Collections</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Here we are reading the excel which is kept in the Data folder. Have a loop into the excel.&#xD;&#xA;Then,&#xD;&#xA;1)  User can provide the input value which you want to check the count and column name.&#xD;&#xA;&#xD;&#xA;2) If user do not provide value then it will take  values and column by itself and provide the count.  " DisplayName="ExcelValueCheck" sap:VirtualizedContainerService.HintSize="572,1857" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Here we are reading the excel which is kept in the Data folder. Have a loop into the excel.&#xA;Then,&#xA;1)  User can provide the input value which you want to check the count and column name.&#xA;&#xA;2) If user do not provide value then it will take  values and column by itself and provide the count.  " DisplayName="ExcelValueCheck" sap:VirtualizedContainerService.HintSize="572,2478" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="ValueCount" />
       <Variable x:TypeArguments="sd:DataTable" Name="Filtered_Dt" />
       <Variable x:TypeArguments="sd:DataTable" Name="Op_Dt" />
       <Variable x:TypeArguments="x:String" Name="ColumnName" />
       <Variable x:TypeArguments="x:String" Name="UserInput" />
+      <Variable x:TypeArguments="x:Boolean" Name="TextFileExist" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -110,13 +111,35 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ReadRange AddHeaders="True" DataTable="[Op_Dt]" DisplayName="Read - Test Excel" sap:VirtualizedContainerService.HintSize="510,88" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Sheet1" WorkbookPath="[in_TestExcelPath]">
-      <ui:ReadRange.Range>
-        <InArgument x:TypeArguments="x:String">
-          <Literal x:TypeArguments="x:String" Value="" />
-        </InArgument>
-      </ui:ReadRange.Range>
-    </ui:ReadRange>
+    <ui:FileExistsX DisplayName="File Exists" Exists="[TextFileExist]" sap:VirtualizedContainerService.HintSize="510,133" sap2010:WorkflowViewState.IdRef="FileExistsX_1" Path="[in_TestExcelPath]" />
+    <If Condition="[TextFileExist]" DisplayName="If - Text File Exist" sap:VirtualizedContainerService.HintSize="510,536" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="376,176" sap2010:WorkflowViewState.IdRef="Sequence_6">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:ReadRange AddHeaders="True" DataTable="[Op_Dt]" DisplayName="Read - Test Excel" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Sheet1" WorkbookPath="[in_TestExcelPath]">
+            <ui:ReadRange.Range>
+              <InArgument x:TypeArguments="x:String">
+                <Literal x:TypeArguments="x:String" Value="" />
+              </InArgument>
+            </ui:ReadRange.Range>
+          </ui:ReadRange>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="376,178" sap2010:WorkflowViewState.IdRef="Sequence_7">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Throw Exception="[new BusinessRuleException(&quot;Test Excel file does not exist&quot;)]" sap:VirtualizedContainerService.HintSize="334,90" sap2010:WorkflowViewState.IdRef="Throw_1" />
+        </Sequence>
+      </If.Else>
+    </If>
     <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - for Check repeted Value" sap:VirtualizedContainerService.HintSize="510,239" sap2010:WorkflowViewState.IdRef="InputDialog_1" IsPassword="False" Label="Please the enter the value which you want to check" Title="Excel Values Check">
       <ui:InputDialog.Result>
         <OutArgument x:TypeArguments="x:String">[UserInput]</OutArgument>
