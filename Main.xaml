@@ -75,7 +75,7 @@
       <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart sap2010:Annotation.AnnotationText="Note :- I have kept the input box for the process you want see. Please select the process and that process will run.&#xA;&#xA;&#xA;1) Excel Automation :- Here we are reading the excel which is kept in the Data folder.&#xA;                                         Have a loop into the excel and decide which value, you want to check.&#xA;     Then,&#xA;             i)  User can provide the input value which you want to check the count and column name.&#xA;             i)) If user do not provide value then it will take  values and column by itself and provide the count &#xA;&#xA;2) Email Automation :- Here We are taking the Email adress, Name, Body, Subject from config file.&#xA;              Sending mail to sender's email address with attachment, which we have given in config file.&#xA;              If attachment is missing in the folder then we are sending the mail with different body and with attachment.&#xD;&#xA;&#xA;3) RegEx Automation :- Here, we have taken the input string which is given in the task word file.&#xA;       Here we are fetching emails and phone number using Uipath matches activity as well as regex direct expression and priting            values at the end.&#xA;" DisplayName="Spectrum-Task-Integrated-Email-Excel-Regex-" sap:VirtualizedContainerService.HintSize="761,1040" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart sap2010:Annotation.AnnotationText="Note :- I have kept the input box for the process you want see. Please select the process and that process will run.&#xA;&#xA;&#xA;1) Excel Automation :- Here we are reading the excel which is kept in the Data folder.&#xA;                                         Have a loop into the excel and decide which value, you want to check.&#xA;     Then,&#xA;             i)  User can provide the input value which you want to check the count and column name.&#xA;             i)) If user do not provide value then it will take  values and column by itself and provide the count &#xA;&#xA;2) Email Automation :- Here We are taking the Email adress, Name, Body, Subject from config file.&#xA;              Sending mail to sender's email address with attachment, which we have given in config file.&#xA;              If attachment is missing in the folder then we are sending the mail with different body and with attachment.&#xA;&#xA;3) RegEx Automation :- Here, we have taken the input string which is given in the task word file.&#xA;       Here we are fetching emails and phone number using Uipath matches activity as well as regex direct expression and priting            values at the end.&#xA;" DisplayName="Spectrum-Task-Integrated-Email-Excel-Regex-" sap:VirtualizedContainerService.HintSize="761,1040" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
       <Variable x:TypeArguments="x:String" Default="Data\Config.xlsx" Name="ConfigFilePath" />
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Default="[new Dictionary(of string,string)]" Name="ConfigDictionary" />
@@ -110,9 +110,15 @@
         <TryCatch.Try>
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ConfigRead.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="334,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="ConfigRead.xaml">
             <ui:InvokeWorkflowFile.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="in_ConfigPath">[ConfigFilePath]</InArgument>
-              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_ConfigDictionary">[ConfigDictionary]</OutArgument>
-              <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheet">[ConfigSheet]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_ConfigPath">
+                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="ConfigFilePath" />
+              </InArgument>
+              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_ConfigDictionary">
+                <VisualBasicReference x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="ConfigDictionary" />
+              </OutArgument>
+              <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheet">
+                <VisualBasicValue x:TypeArguments="s:String[]" ExpressionText="ConfigSheet" />
+              </InArgument>
             </ui:InvokeWorkflowFile.Arguments>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -133,7 +139,7 @@
               <ActivityAction.Argument>
                 <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
               </ActivityAction.Argument>
-              <Sequence sap:VirtualizedContainerService.HintSize="496,321" sap2010:WorkflowViewState.IdRef="Sequence_2">
+              <Sequence DisplayName="System Exception Sequence" sap:VirtualizedContainerService.HintSize="496,325" sap2010:WorkflowViewState.IdRef="Sequence_2">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -162,7 +168,7 @@
               <ActivityAction.Argument>
                 <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="exception" />
               </ActivityAction.Argument>
-              <Sequence sap:VirtualizedContainerService.HintSize="496,321" sap2010:WorkflowViewState.IdRef="Sequence_3">
+              <Sequence DisplayName="Business Exception Sequence" sap:VirtualizedContainerService.HintSize="496,325" sap2010:WorkflowViewState.IdRef="Sequence_3">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -202,7 +208,7 @@
                   <av:PointCollection x:Key="ConnectorLocation">300,286 300,316.5</av:PointCollection>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:InputDialog OptionsString="{x:Null}" DisplayName="Input Dialog - Task Selection" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="InputDialog_1" IsPassword="False" Label="Select the Task " Options="[{&quot;Excel&quot;,&quot;Email&quot;,&quot;RegEx&quot;}]" Title="Task Selection">
+              <ui:InputDialog OptionsString="{x:Null}" DisplayName="Input Dialog - Task Selection" sap:VirtualizedContainerService.HintSize="334,292" sap2010:WorkflowViewState.IdRef="InputDialog_1" IsPassword="False" Label="Please Select the Task " Options="[{&quot;Excel&quot;,&quot;Email&quot;,&quot;RegEx&quot;}]" Title="Task Selection">
                 <ui:InputDialog.Result>
                   <OutArgument x:TypeArguments="x:String">[UserSelection]</OutArgument>
                 </ui:InputDialog.Result>
@@ -260,7 +266,7 @@
                         </ui:InvokeWorkflowFile>
                       </TryCatch.Try>
                       <TryCatch.Catches>
-                        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,21" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_2">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -274,10 +280,10 @@
                             <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,92" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Error" Message="[&quot;Excel Value Check Failed&quot;]" />
                           </ActivityAction>
                         </Catch>
-                        <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="400,161" sap2010:WorkflowViewState.IdRef="Catch`1_7">
+                        <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_7">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                               <x:Boolean x:Key="IsPinned">False</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>

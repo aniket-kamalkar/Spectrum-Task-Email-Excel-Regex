@@ -5,7 +5,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>674,2543</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>674,2047</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ExcelValueCheck_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -96,7 +96,7 @@
       <AssemblyReference>System.Collections</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Here we are reading the excel which is kept in the Data folder. Have a loop into the excel.&#xA;Then,&#xA;1)  User can provide the input value which you want to check the count and column name.&#xA;&#xA;2) If user do not provide value then it will take  values and column by itself and provide the count.  " DisplayName="ExcelValueCheck" sap:VirtualizedContainerService.HintSize="572,2478" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Here we are reading the excel which is kept in the Data folder. Have a loop into the excel.&#xA;Then,&#xA;1)  User can provide the input value which you want to check the count and column name.&#xA;&#xA;2) If user do not provide value then it will take  values and column by itself and provide the count.  " DisplayName="ExcelValueCheck" sap:VirtualizedContainerService.HintSize="572,1982" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="ValueCount" />
       <Variable x:TypeArguments="sd:DataTable" Name="Filtered_Dt" />
@@ -150,7 +150,7 @@
         <OutArgument x:TypeArguments="x:String">[ColumnName]</OutArgument>
       </ui:InputDialog.Result>
     </ui:InputDialog>
-    <If Condition="[String.IsNullOrEmpty(UserInput) Or String.IsNullOrEmpty(ColumnName)]" sap:VirtualizedContainerService.HintSize="510,973" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[String.IsNullOrEmpty(UserInput) Or String.IsNullOrEmpty(ColumnName)]" DisplayName="If - Value or Column name empty" sap:VirtualizedContainerService.HintSize="510,477" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Sequence sap:VirtualizedContainerService.HintSize="476,295" sap2010:WorkflowViewState.IdRef="Sequence_4">
           <sap:WorkflowViewStateService.ViewState>
